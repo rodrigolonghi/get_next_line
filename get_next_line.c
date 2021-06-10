@@ -6,7 +6,13 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:11 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/02 00:32:11 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/10 00:57:01 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+
+int	get_next_line(int fd, char **line)
+{
+
+}

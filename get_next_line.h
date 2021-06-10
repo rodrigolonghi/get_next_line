@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:37 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/09 23:41:58 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/10 03:13:50 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 # include <unistd.h>
 
 int	get_next_line(int fd, char **line);
+int	ft_strnchr(char *s, int c);
 
 #endif

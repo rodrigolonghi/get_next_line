@@ -6,27 +6,67 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:11 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/10 03:15:00 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/14 02:13:31 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
+
+static int	ft_result(char *save, char **line)
+{
+	if (!*line)
+		return (-1);
+	if (!save)
+	{
+		*line = ft_strdup("");
+		return (0);
+	}
+	*line = ft_strdup(save);
+	return (1);
+}
+
+static char	*ft_remove_nl(char *str)
+{
+	char	*dup;
+	int		size;
+
+	dup = (char *)malloc(ft_strlen(str));
+	size = ft_strnchr(str);
+	if (size == 0)
+	{
+		str++;
+		ft_strlcpy(dup, str, ft_strlen(str) + 1);
+	}
+	else
+		ft_strlcpy(dup, str, ft_strnchr(str) + 1);
+	return (dup);
+}
+
 int	get_next_line(int fd, char **line)
 {
-	ssize_t	result;
-	char	*buffer;
+	static char	*save;
+	char		*buf;
+	ssize_t		size;
 
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
+	buf = malloc(BUFFER_SIZE + 1);
+	size = read(fd, buf, BUFFER_SIZE);
+	while (size > 0)
 	{
-		free(buffer);
-		return (-1);
+		buf[size] = '\0';
+		if (ft_strnchr(buf) != -1)
+		{
+			buf = ft_remove_nl(buf);
+			size = -1;
+		}
+		if (!save)
+			save = ft_strdup(buf);
+		else
+			save = ft_strdup(ft_strjoin(save, buf));
+		if (size > 0)
+			size = read(fd, buf, BUFFER_SIZE);
 	}
-	buffer[BUFFER_SIZE] = '\0';
-	read(fd, buffer, BUFFER_SIZE);
-	result = ft_strnchr(buffer, '\n');
-	return (result);
+	free(buf);
+	return (ft_result(save, line));
 }

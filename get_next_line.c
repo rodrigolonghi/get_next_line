@@ -6,14 +6,16 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:11 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/14 02:51:08 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/14 03:00:25 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	ft_result(char *save, char **line)
+static int	ft_result(char *save, char **line, ssize_t size)
 {
+	if (size == -1)
+		return (-1);
 	if (!save)
 	{
 		*line = ft_strdup("");
@@ -78,5 +80,5 @@ int	get_next_line(int fd, char **line)
 			size = read(fd, buf, BUFFER_SIZE);
 	}
 	free(buf);
-	return (ft_result(save, line));
+	return (ft_result(save, line, size));
 }

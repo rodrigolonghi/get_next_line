@@ -6,17 +6,18 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:11 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/14 03:00:25 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/14 19:48:49 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 static int	ft_result(char *save, char **line, ssize_t size)
 {
-	if (size == -1)
+	if (size == -1 && !save)
 		return (-1);
-	if (!save)
+	if (!save || size == 0)
 	{
 		*line = ft_strdup("");
 		return (0);
@@ -30,7 +31,6 @@ static char	*ft_remove_nl(char *str)
 	char	*dup;
 	int		size;
 	int		pos;
-	int		x;
 
 	pos = 0;
 	size = 0;
@@ -42,13 +42,13 @@ static char	*ft_remove_nl(char *str)
 	}
 	dup = (char *)malloc(size + 1);
 	pos = 0;
-	x = 0;
+	size = 0;
 	while (str[pos])
 	{
 		if (str[pos] != '\n')
-			dup[pos] = str[pos + x];
+			dup[pos] = str[pos + size];
 		else
-			x++;
+			size++;
 		pos++;
 	}
 	return (dup);

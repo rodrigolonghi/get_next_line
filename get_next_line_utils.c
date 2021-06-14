@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:24 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/14 01:52:03 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/14 02:34:49 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,34 +68,15 @@ int	ft_strnchr(const char *s)
 char	*ft_strdup(const char *s)
 {
 	char	*dup;
+	int		pos;
 
 	dup = (char *)malloc(ft_strlen(s) + 1);
-	if (!dup)
-		return (NULL);
-	ft_strlcpy(dup, s, ft_strlen(s) + 1);
-	return (dup);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	pos;
-
-	if (!dst || !src)
-		return (0);
 	pos = 0;
-	if (size > 0)
+	while (s[pos])
 	{
-		while (pos < size - 1 && src[pos])
-		{
-			dst[pos] = src[pos];
-			pos++;
-		}
-		dst[pos] = '\0';
-	}
-	pos = 0;
-	while (src[pos] != '\0')
-	{
+		dup[pos] = s[pos];
 		pos++;
 	}
-	return (pos);
+	dup[pos] = '\0';
+	return (dup);
 }

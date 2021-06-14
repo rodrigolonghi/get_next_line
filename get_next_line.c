@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:11 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/14 02:13:31 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/14 02:51:08 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static int	ft_result(char *save, char **line)
 {
-	if (!*line)
-		return (-1);
 	if (!save)
 	{
 		*line = ft_strdup("");
@@ -29,16 +27,28 @@ static char	*ft_remove_nl(char *str)
 {
 	char	*dup;
 	int		size;
+	int		pos;
+	int		x;
 
-	dup = (char *)malloc(ft_strlen(str));
-	size = ft_strnchr(str);
-	if (size == 0)
+	pos = 0;
+	size = 0;
+	while (str[pos])
 	{
-		str++;
-		ft_strlcpy(dup, str, ft_strlen(str) + 1);
+		if (str[pos] != '\n')
+			size++;
+		pos++;
 	}
-	else
-		ft_strlcpy(dup, str, ft_strnchr(str) + 1);
+	dup = (char *)malloc(size + 1);
+	pos = 0;
+	x = 0;
+	while (str[pos])
+	{
+		if (str[pos] != '\n')
+			dup[pos] = str[pos + x];
+		else
+			x++;
+		pos++;
+	}
 	return (dup);
 }
 

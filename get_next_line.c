@@ -6,16 +6,20 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:11 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/19 18:32:51 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/19 20:32:23 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	ft_remove_nl(char **save, char **line, int size)
+static int	ft_remove_nl(char **save, char **line)
 {
 	char	*temp;
+	int		size;
 
+	size = 0;
+	while ((*save)[size] != '\0' && (*save)[size] != '\n')
+		size++;
 	if ((*save)[size] == '\0')
 	{
 		*line = ft_strdup(*save);
@@ -42,7 +46,7 @@ static int	ft_result(char **save, char **line, ssize_t size)
 		*line = ft_strdup("");
 		return (0);
 	}
-	return (ft_remove_nl(save, line, ft_strnchr(*save)));
+	return (ft_remove_nl(save, line));
 }
 
 int	get_next_line(int fd, char **line)
@@ -63,9 +67,9 @@ int	get_next_line(int fd, char **line)
 		{
 			temp = ft_strjoin(save, buf);
 			free(save);
-			save = ft_strdup(temp);
+			save = temp;
 		}
-		if (ft_strnchr(save) != -1)
+		if (ft_strchr(save))
 			break ;
 		size = read(fd, buf, BUFFER_SIZE);
 	}

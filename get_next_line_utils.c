@@ -6,13 +6,13 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:24 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/19 18:23:55 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/19 19:54:02 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *s)
 {
 	size_t	size;
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (size);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*string;
 	int		i;
@@ -30,7 +30,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	string = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	string = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!string)
 		return (NULL);
 	i = 0;
@@ -49,28 +49,28 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (string);
 }
 
-int	ft_strnchr(const char *s)
+char	*ft_strchr(char *s)
 {
-	int				i;
-	unsigned char	*temp;
+	int		i;
+	char	*temp;
 
 	i = 0;
-	temp = (unsigned char *)s;
+	temp = s;
 	while (temp[i] != '\0')
 	{
 		if (temp[i] == '\n')
-			return (i);
+			return (temp + i);
 		i++;
 	}
-	return (-1);
+	return (NULL);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	char	*dup;
 	int		pos;
 
-	dup = (char *)malloc(ft_strlen(s) + 1);
+	dup = malloc(ft_strlen(s) + 1);
 	pos = 0;
 	while (s[pos])
 	{
@@ -81,12 +81,12 @@ char	*ft_strdup(const char *s)
 	return (dup);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char			*substring;
 	unsigned int	i;
 
-	substring = (char *)malloc(len + 1);
+	substring = malloc(len + 1);
 	i = 0;
 	while (i < len)
 	{

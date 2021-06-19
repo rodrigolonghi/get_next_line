@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:24 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/14 02:34:49 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/19 18:23:55 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,20 @@ char	*ft_strdup(const char *s)
 	}
 	dup[pos] = '\0';
 	return (dup);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char			*substring;
+	unsigned int	i;
+
+	substring = (char *)malloc(len + 1);
+	i = 0;
+	while (i < len)
+	{
+		substring[i] = s[start + i];
+		i++;
+	}
+	substring[i] = '\0';
+	return (substring);
 }

@@ -6,79 +6,69 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:11 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/14 19:48:49 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/19 18:32:51 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-static int	ft_result(char *save, char **line, ssize_t size)
+static int	ft_remove_nl(char **save, char **line, int size)
 {
-	if (size == -1 && !save)
+	char	*temp;
+
+	if ((*save)[size] == '\0')
+	{
+		*line = ft_strdup(*save);
+		if (*save != NULL)
+		{
+			free(*save);
+			*save = NULL;
+		}
+		return (0);
+	}
+	*line = ft_substr(*save, 0, size);
+	temp = ft_strdup((*save) + size + 1);
+	free(*save);
+	*save = temp;
+	return (1);
+}
+
+static int	ft_result(char **save, char **line, ssize_t size)
+{
+	if (size == -1)
 		return (-1);
-	if (!save || size == 0)
+	if (*save == NULL && size == 0)
 	{
 		*line = ft_strdup("");
 		return (0);
 	}
-	*line = ft_strdup(save);
-	return (1);
-}
-
-static char	*ft_remove_nl(char *str)
-{
-	char	*dup;
-	int		size;
-	int		pos;
-
-	pos = 0;
-	size = 0;
-	while (str[pos])
-	{
-		if (str[pos] != '\n')
-			size++;
-		pos++;
-	}
-	dup = (char *)malloc(size + 1);
-	pos = 0;
-	size = 0;
-	while (str[pos])
-	{
-		if (str[pos] != '\n')
-			dup[pos] = str[pos + size];
-		else
-			size++;
-		pos++;
-	}
-	return (dup);
+	return (ft_remove_nl(save, line, ft_strnchr(*save)));
 }
 
 int	get_next_line(int fd, char **line)
 {
 	static char	*save;
 	char		*buf;
+	char		*temp;
 	ssize_t		size;
 
-	if (fd < 0 || !line || BUFFER_SIZE <= 0)
-		return (-1);
 	buf = malloc(BUFFER_SIZE + 1);
 	size = read(fd, buf, BUFFER_SIZE);
 	while (size > 0)
 	{
 		buf[size] = '\0';
-		if (ft_strnchr(buf) != -1)
-		{
-			buf = ft_remove_nl(buf);
-			size = -1;
-		}
 		if (!save)
 			save = ft_strdup(buf);
 		else
-			save = ft_strdup(ft_strjoin(save, buf));
-		if (size > 0)
-			size = read(fd, buf, BUFFER_SIZE);
+		{
+			temp = ft_strjoin(save, buf);
+			free(save);
+			save = ft_strdup(temp);
+		}
+		if (ft_strnchr(save) != -1)
+			break ;
+		size = read(fd, buf, BUFFER_SIZE);
 	}
 	free(buf);
-	return (ft_result(save, line, size));
+	return (ft_result(&save, line, size));
 }

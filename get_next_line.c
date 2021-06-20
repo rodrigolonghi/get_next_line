@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:11 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/06/19 20:32:23 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2021/06/19 22:13:33 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	ft_remove_nl(char **save, char **line)
 
 static int	ft_result(char **save, char **line, ssize_t size)
 {
-	if (size == -1)
+	if (size == -1 || BUFFER_SIZE <= 0)
 		return (-1);
 	if (*save == NULL && size == 0)
 	{
